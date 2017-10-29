@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main', [ 'title' => 'A propos de'])
 
 @section('content')
     <div class="container">
