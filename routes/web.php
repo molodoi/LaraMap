@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Mail\ContactCreated;
+use App\Mail\ContactFormCreated;
 
 Route::get('/',[
 	'as' => 'home',
@@ -19,11 +19,6 @@ Route::get('/',[
 //équivaut à :
 //Route::get('/', 'PagesController@home')->name('home');
 //Route::name('home')->get('/', 'PagesController@home');
-
-
-Route::get('/test-mail', function(){
-	return new ContactCreated('Matthieu', 'contact@ticme.fr', 'corps du message');	
-});
 
 Route::get('/about', [
 	'as' => 'about',
