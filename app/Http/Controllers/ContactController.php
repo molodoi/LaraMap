@@ -25,7 +25,6 @@ class ContactController extends Controller
     	$message->body = $request->body;
     	$message->save();*/
 
-
     	Mail::to(config('laramap.admin_email_support'))
     		->send(new ContactFormCreated($message));
 

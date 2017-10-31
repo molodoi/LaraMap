@@ -2,12 +2,8 @@
 
 if(! function_exists('page_title')){
 	function page_title($title){
-		$base_title = ' Laramap';
-		if($title === ''){
-			return $base_title;
-		}else{
-			return $title . ' ' .$base_title;
-		}
+		$base_title = 'Laramap';
+		return empty($title) ? $base_title : $title . ' ' .$base_title;
 	}
 }
 
