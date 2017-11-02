@@ -10,6 +10,9 @@
 				<li class="nav-item {{ set_active_route('home') }}">
 					<a class="nav-link" href="{{ route('home') }}">Home <span class="sr-only">(current)</span></a>
 				</li>
+				<li class="nav-item {{ set_active_route('posts.index') }}">
+                    <a class="nav-link" href="{{ route('posts.index') }}">News</a>
+                </li>
 				<li class="nav-item {{ set_active_route('about') }}">
 					<a class="nav-link" href="{{ route('about') }}">About</a>
 				</li>      

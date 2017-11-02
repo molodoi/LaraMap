@@ -20,6 +20,10 @@ Route::get('/',[
 //Route::get('/', 'PagesController@home')->name('home');
 //Route::name('home')->get('/', 'PagesController@home');
 
+Route::resource('posts', 'PostController');
+//Exemple only action
+//Route::resource('posts', 'PostController', ['only' => ['create, store']]);
+
 Route::get('/about', [
 	'as' => 'about',
 	'uses' => 'PagesController@about'
