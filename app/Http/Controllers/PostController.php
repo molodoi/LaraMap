@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -34,21 +35,8 @@ class PostController extends Controller
     {
         $post = new Post();
         $categories = Category::pluck('name', 'id');
-        return view('posts.create', compact('post', 'categories'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-
-        $post = Post::create($request->all());
-        $categories = Category::pluck('name', 'id');
-        return view('posts.edit', compact('post', 'categories'));
+        $tags = Tag::pluck('name', 'id');
+        return view('posts.create', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -72,7 +60,23 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($post->id);
         $categories = Category::pluck('name', 'id');
-        return view('posts.edit', compact('post', 'categories'));
+        $tags = Tag::pluck('name', 'id');
+        return view('posts.edit', compact('post', 'categories', 'tags'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $post = Post::create($request->all());
+        $post->tags()->sync($request->get('tags_list'));
+        $categories = Category::pluck('name', 'id');
+        $tags = Tag::pluck('name', 'id');
+        return view('posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -86,8 +90,10 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($post->id);
         $post->update($request->all());
+        $post->tags()->sync($request->get('tags_list'));
         $categories = Category::pluck('name', 'id');
-        return view('posts.edit', compact('post', 'categories'));
+        $tags = Tag::pluck('name', 'id');
+        return view('posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**

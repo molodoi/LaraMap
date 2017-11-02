@@ -10,10 +10,25 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'content', 'slug', 'published', 'category_id'];
+    protected $fillable = ['title', 'content', 'slug', 'published', 'category_id', 'tags_list'];
+    //protected $fillable = ['title', 'content', 'slug', 'published', 'category_id'];
 
     public function category(){
         return $this->belongsTo('App\Models\Category');
+    }
+
+    public function tags(){
+        return $this->belongsToMany('App\Models\Tag');
+    }
+
+    public function getTagsListAttribute(){
+        if($this->id){
+            return $this->tags->pluck('name', 'id');
+        }
+    }
+
+    public function setTagsListAttribute($value){
+        return $this->tags()->sync($value);
     }
 
     /**
@@ -26,6 +41,11 @@ class Post extends Model
         //return $query->where('published', true)->whereRaw('created_at < NOW()');
     }
 
+    /**
+     * Scope est search by title
+     * @param $query
+     *
+     */
     public function scopeSearchByTitle($query, $q){
         return $query->where('title', 'LIKE', '%'.$q.'%' );
     }

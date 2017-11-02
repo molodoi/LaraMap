@@ -17,6 +17,10 @@
             {!! Form::select('category_id', $categories, $post->category_id ,['class'=>'form-control']); !!}
         </div>
         <div class="form-group">
+            {!! Form::label('tags_list[]', 'Tags'); !!}
+            {!! Form::select('tags_list[]', $tags, $post->tags->pluck('id'),['class'=>'form-control', 'multiple' => true ]); !!}
+        </div>
+        <div class="form-group">
             {!! Form::label('content', 'Content'); !!}
             {!! Form::textarea('content', $post->content, ['class'=>'form-control']); !!}
         </div>
