@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Requests\EditPostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
@@ -89,6 +91,18 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $post = Post::findOrFail($post->id);
+
+        $validator = \Validator::make($request->all(), [
+            'title' => 'bail|required|max:255',
+            'slug' => 'bail|required|max:255',
+            'content' => 'bail|required|max:65000'
+        ]);
+        if ($validator->fails()) {
+            return back()
+                ->withInput()
+                ->withErrors($validator);
+        }
+
         $post->update($request->all());
         $post->tags()->sync($request->get('tags_list'));
         $categories = Category::pluck('name', 'id');
@@ -104,6 +118,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete ();
+        $posts = Post::published()->with('category')->get();
+        return view('posts.index', compact('posts'));
     }
 }
