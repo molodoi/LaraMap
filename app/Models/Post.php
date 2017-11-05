@@ -10,8 +10,10 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'content', 'slug', 'published', 'category_id', 'tags_list'];
+    public $fillable = ['title', 'content', 'slug', 'published', 'category_id', 'tags_list'];
     //protected $fillable = ['title', 'content', 'slug', 'published', 'category_id'];
+
+    public $timestamps = false;
 
     public function category(){
         return $this->belongsTo('App\Models\Category');

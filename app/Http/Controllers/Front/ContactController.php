@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -8,11 +8,12 @@ use App\Mail\ContactFormCreated;
 use App\Http\Requests\ContactRequest;
 use App\Models\ContactMessage;
 use MercurySeries\Flashy\Flashy;
+use App\Http\Controllers\Controller;
 
 class ContactController extends Controller
 {
     public function create(){
- 		return view('contacts.create');   	
+ 		return view('frontend.contacts.create');
     }
 
     public function store(ContactRequest $request){
